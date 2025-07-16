@@ -5,30 +5,23 @@
     {{-- nuova dashboard  --}}
 
 
-    <!-- HEADER REVISORE CON EFFETTO VETRO -->
-    <div class="dashboard-revisore-container  mt-5">
-
-
-        <header
-            class="revisore-header vetro-castom anim-on-scroll p-5 d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
-
-
+       <!-- HEADER REVISORE CON EFFETTO VETRO -->
+    <div class="dashboard-revisore-container mt-5">
+        <header class="revisore-header vetro-castom anim-on-scroll p-4 p-md-5 d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+          
             <div class="revisore-info text-center text-md-start">
-                <h1 class="ts">Benvenuto, {{ auth()->user()->name }}!</h1>
+                <h1 class="ts h2">Benvenuto, {{ auth()->user()->name }}!</h1> 
                 <p><strong>Ruolo:</strong> Revisore</p>
             </div>
-
 
             <div class="revisore-stats p-3">
                 <span class="badge-revisore">
                     {{ \App\Models\Article::toBeRevisedCount() }} articoli da revisionare
                 </span>
             </div>
-
         </header>
-
-
     </div>
+
 
 
 
@@ -37,41 +30,34 @@
 
     <main>
 
-        <!-- SEZIONE ARTICOLO DA REVISIONARE - NUOVO DESIGN -->
-        <!-- MESSAGGIO DI SUCCESSO (FLASH MESSAGE) -->
+         <!-- MESSAGGIO DI SUCCESSO -->
         @if (session('message'))
-            <div class=" alert alert-success anim-on-scroll anim-delay-1 text-center ">
+            <div class="alert alert-success anim-on-scroll anim-delay-1 text-center">
                 <p class="fs-5 my-auto cp">{{ session('message') }}</p>
             </div>
         @endif
+
+        {{-- SEZIONE PRINCIPALE CON ARTICOLO DA REVISIONARE --}}
         <section class="sezione-principale anim-on-scroll anim-delay-2 pt-5">
             @if ($article_to_check)
-                <div class="revisore-card py-5">
+                <div class="revisore-card py-5 container-fluid">
 
-
+                <div class="row g-4 justify-content-center">
                     {{-- Separatore visivo per distinguere i dettagli dall'analisi immagini --}}
 
                     <hr class="mx-4" style="border-color: var(--vetro-border);">
 
                     {{-- NUOVA GRIGLIA DI ANALISI IMMAGINI --}}
                     @if ($article_to_check->images->isNotEmpty())
-                        {{-- Aggiunge un po' di respiro --}}
+                    <div class="col-12 col-lg-7">
                         @if ($article_to_check->updated_at > $article_to_check->created_at)
-                            <div class="container bg-w rounded-5  mt-3">
-                                <div class="row">
-                                    <div class="col-12 text-center">
+                            <div class="bg-w rounded-5 mb-4 p-3 text-center">
                                         <h1 class="cp">Articoli Modificati</h1>
-                                    </div>
-                                    <div class="col-12 text-center">
                                         <p class="fs-5 cp fw-semibold">Questo articolo è stato modificato dopo la sua
                                             approvazione
                                             iniziale. Si prega di rivedere le modifiche.</p>
-                                    </div>
-
-                                </div>
-
-
                             </div>
+                            
                         @else
                             <h4 class="mb-3 text-center display-4 ts">Articoli da revisionare</h4>
                         @endif

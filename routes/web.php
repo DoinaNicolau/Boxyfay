@@ -7,6 +7,7 @@ use App\Http\Controllers\RevisorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;      
 use App\Http\Controllers\CheckoutController;
+use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/', [PublicController::class, 'homepage'])->name('homepage');
 Route::get('/search/article', [PublicController::class, 'search'])->name('search.article');
@@ -26,11 +27,10 @@ Route::delete('/articles/{article}', [ArticleController::class, 'destroy'])->nam
 Route::get('/revisor/index', [RevisorController::class, 'index'])->name('revisor.index')->middleware('isRevisor');
 Route::patch('/accept/{article}', [RevisorController::class, 'accept'])->name('accept')->middleware('isRevisor');
 Route::patch('/reject/{article}', [RevisorController::class, 'reject'])->name('reject')->middleware('isRevisor');
-// Route::get('/revisor/request', [RevisorController::class, 'becomeRevisor'])->middleware('auth')->name('become.revisor');
+
 Route::post('/work-with-us/submit', [RevisorController::class, 'submitRevisorRequest'])->name('revisor.submit')->middleware('auth');
 Route::get('/make/revisor/{user}', [RevisorController::class, 'makeRevisor'])->name('make.revisor')->middleware('isRevisor');
 Route::patch('/change/{article}', [RevisorController::class, 'changeStatus'])->name('change')->middleware('isRevisor');
-//Rotta revisor.load utile solo ad aprire la modale (la funzione non esiste nel controller)
 Route::get('/revisor/load/{article}', [RevisorController::class, 'loadArticle'])->name('revisor.load')->middleware('isRevisor');
 
 Route::get('/user/profile', [UserController::class,'index'])->name('user.index')->middleware('auth');
@@ -49,6 +49,13 @@ Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear')
 // Rotte per il checkout
   Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout')->middleware('auth');
 
+  // rotte per i social login
+
+// Rotta che reindirizza a Google
+Route::get('/auth/google/login', [PublicController::class, 'googleLogin'])->name('google.login');
+
+// Rotta che gestisce la risposta di Google
+Route::get('/auth/google/callback', [PublicController::class, 'googleCallback'])->name('google.callback');
 
 
 

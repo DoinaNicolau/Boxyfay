@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Log;
 
 class PublicController extends Controller
 {
@@ -33,7 +34,7 @@ class PublicController extends Controller
     }
 
     public function googleCallback () {
-        $googleUser = Socialite::driver('google')->user();
+           $googleUser = Socialite::driver('google')->stateless()->user();
 
         $user = User::where('google_id', $googleUser->id)->first();
 
@@ -59,6 +60,6 @@ class PublicController extends Controller
 
         Auth::login($user);
 
-        return view('article.create');
+        return redirect()->route('homepage')->with('status', 'Login effettuato con successo!');
     }
 }
