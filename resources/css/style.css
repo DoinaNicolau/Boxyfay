@@ -93,15 +93,21 @@ overflow-x: hidden;
     padding: 20px;
     box-shadow: 0px 0px 10px 0px var(--ca);
 }
-.box-revisor{
+.box-revisor {
     background-color: var(--cp);
     border: 1px solid var(--ca);
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0px 0px 10px 0px var(--ca);
-    width:50rem;
-   text-wrap-mode: wrap;
-    word-break: break-word;
+    max-width: 100%;         /* <-- invece di width fissa */
+    width: 100%;             /* occupa tutta la colonna */
+    word-break: break-word;  /* utile per testi lunghi */
+}
+
+@media (max-width: 576px) {
+  .box-revisor {
+    padding: 1rem !important;
+  }
 }
 
 /* navbar prova modifica */
